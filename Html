@@ -1,0 +1,893 @@
+
+Message 2 of 2. For JAWS, turn virtual PC Cursor on if needed.
+
+AMANDA E. ASGARI-RAD
+To:  me
+ · 
+Sun, Apr 26 at 5:44 PM
+Message Body
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Call Navigator — Seller + Insurance</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+–bg: #0e0f13;
+–surface: #16181f;
+–surface2: #1e2029;
+–border: #2a2d3a;
+–accent: #c8a96e;
+–accent2: #5b8dee;
+–green: #4caf82;
+–red: #e05c5c;
+–text: #e8e9f0;
+–muted: #7a7f96;
+–yes: #1e3a2a;
+–yes-border: #4caf82;
+–no: #3a1e1e;
+–no-border: #e05c5c;
+}
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background: var(–bg);
+color: var(–text);
+font-family: ‘DM Sans’, sans-serif;
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+/* Noise texture overlay */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.03’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 0;
+opacity: 0.4;
+}
+
+header {
+position: relative;
+z-index: 10;
+padding: 24px 32px 20px;
+border-bottom: 1px solid var(–border);
+display: flex;
+align-items: center;
+justify-content: space-between;
+background: linear-gradient(180deg, #13141a 0%, transparent 100%);
+}
+
+.logo {
+font-family: ‘DM Serif Display’, serif;
+font-size: 22px;
+color: var(–accent);
+letter-spacing: 0.5px;
+}
+
+.logo span { color: var(–muted); font-size: 13px; font-family: ‘DM Sans’, sans-serif; display: block; font-weight: 300; margin-top: 2px; }
+
+.phase-indicator {
+display: flex;
+gap: 8px;
+align-items: center;
+}
+
+.phase-dot {
+width: 8px; height: 8px;
+border-radius: 50%;
+background: var(–border);
+transition: all 0.3s ease;
+}
+.phase-dot.active { background: var(–accent); box-shadow: 0 0 8px var(–accent); }
+.phase-dot.done { background: var(–green); }
+
+.reset-btn {
+background: transparent;
+border: 1px solid var(–border);
+color: var(–muted);
+padding: 7px 16px;
+border-radius: 6px;
+font-size: 12px;
+font-family: ‘DM Sans’, sans-serif;
+cursor: pointer;
+transition: all 0.2s;
+letter-spacing: 0.5px;
+text-transform: uppercase;
+}
+.reset-btn:hover { border-color: var(–accent); color: var(–accent); }
+
+.main {
+position: relative;
+z-index: 1;
+max-width: 780px;
+margin: 0 auto;
+padding: 32px 20px 80px;
+}
+
+/* Breadcrumb trail */
+.breadcrumb {
+display: flex;
+flex-wrap: wrap;
+gap: 6px;
+margin-bottom: 28px;
+min-height: 28px;
+}
+
+.crumb {
+font-size: 11px;
+color: var(–muted);
+background: var(–surface);
+border: 1px solid var(–border);
+padding: 4px 10px;
+border-radius: 20px;
+display: flex;
+align-items: center;
+gap: 5px;
+animation: fadeIn 0.2s ease;
+}
+.crumb .arrow { color: var(–border); }
+.crumb.yes-crumb { border-color: #4caf8244; color: var(–green); }
+.crumb.no-crumb { border-color: #e05c5c44; color: var(–red); }
+
+/* Node card */
+.node-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 16px;
+padding: 28px 32px;
+margin-bottom: 20px;
+animation: slideUp 0.3s ease;
+position: relative;
+overflow: hidden;
+}
+
+.node-card::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 3px;
+background: linear-gradient(90deg, var(–accent), transparent);
+opacity: 0.6;
+}
+
+.node-card.phase-opening::before { background: linear-gradient(90deg, #c8a96e, transparent); }
+.node-card.phase-bridge::before { background: linear-gradient(90deg, #5b8dee, transparent); }
+.node-card.phase-close::before { background: linear-gradient(90deg, #4caf82, transparent); }
+.node-card.phase-objection::before { background: linear-gradient(90deg, #e05c5c, transparent); }
+.node-card.phase-insurance::before { background: linear-gradient(90deg, #a855f7, transparent); }
+.node-card.phase-end::before { background: linear-gradient(90deg, #7a7f96, transparent); }
+
+.phase-tag {
+display: inline-block;
+font-size: 10px;
+font-weight: 600;
+letter-spacing: 1.2px;
+text-transform: uppercase;
+padding: 3px 10px;
+border-radius: 20px;
+margin-bottom: 14px;
+}
+
+.tag-opening { background: #c8a96e22; color: var(–accent); border: 1px solid #c8a96e44; }
+.tag-bridge { background: #5b8dee22; color: var(–accent2); border: 1px solid #5b8dee44; }
+.tag-close { background: #4caf8222; color: var(–green); border: 1px solid #4caf8244; }
+.tag-objection { background: #e05c5c22; color: var(–red); border: 1px solid #e05c5c44; }
+.tag-insurance { background: #a855f722; color: #c084fc; border: 1px solid #a855f744; }
+.tag-end { background: #7a7f9622; color: var(–muted); border: 1px solid #7a7f9644; }
+
+.node-title {
+font-family: ‘DM Serif Display’, serif;
+font-size: 20px;
+color: var(–text);
+margin-bottom: 6px;
+line-height: 1.3;
+}
+
+.node-subtitle {
+font-size: 13px;
+color: var(–muted);
+margin-bottom: 20px;
+line-height: 1.5;
+}
+
+/* Script box */
+.script-box {
+background: var(–surface2);
+border: 1px solid var(–border);
+border-left: 3px solid var(–accent);
+border-radius: 10px;
+padding: 16px 20px;
+margin-bottom: 24px;
+}
+
+.script-label {
+font-size: 10px;
+text-transform: uppercase;
+letter-spacing: 1px;
+color: var(–accent);
+font-weight: 600;
+margin-bottom: 8px;
+}
+
+.script-text {
+font-size: 14px;
+line-height: 1.7;
+color: #c8cad8;
+font-style: italic;
+}
+
+.script-text em {
+color: var(–accent);
+font-style: normal;
+font-weight: 500;
+}
+
+/* Question */
+.question-label {
+font-size: 11px;
+text-transform: uppercase;
+letter-spacing: 1px;
+color: var(–muted);
+font-weight: 600;
+margin-bottom: 12px;
+}
+
+/* Choice buttons */
+.choices {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.choice-btn {
+display: flex;
+align-items: flex-start;
+gap: 14px;
+padding: 16px 20px;
+border-radius: 12px;
+border: 1px solid var(–border);
+background: var(–surface2);
+cursor: pointer;
+transition: all 0.2s ease;
+text-align: left;
+font-family: ‘DM Sans’, sans-serif;
+}
+
+.choice-btn:hover { transform: translateX(4px); }
+
+.choice-btn.yes-btn {
+border-color: #4caf8233;
+}
+.choice-btn.yes-btn:hover {
+background: var(–yes);
+border-color: var(–yes-border);
+box-shadow: 0 0 20px #4caf8215;
+}
+
+.choice-btn.no-btn {
+border-color: #e05c5c33;
+}
+.choice-btn.no-btn:hover {
+background: var(–no);
+border-color: var(–no-border);
+box-shadow: 0 0 20px #e05c5c15;
+}
+
+.choice-btn.neutral-btn {
+border-color: #5b8dee33;
+}
+.choice-btn.neutral-btn:hover {
+background: #1a2035;
+border-color: var(–accent2);
+box-shadow: 0 0 20px #5b8dee15;
+}
+
+.choice-icon {
+width: 28px; height: 28px;
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-size: 13px;
+font-weight: 700;
+flex-shrink: 0;
+margin-top: 1px;
+}
+.yes-icon { background: #4caf8222; color: var(–green); border: 1px solid #4caf8244; }
+.no-icon { background: #e05c5c22; color: var(–red); border: 1px solid #e05c5c44; }
+.neutral-icon { background: #5b8dee22; color: var(–accent2); border: 1px solid #5b8dee44; }
+
+.choice-content { flex: 1; }
+.choice-label {
+font-size: 13px;
+font-weight: 600;
+color: var(–text);
+margin-bottom: 3px;
+}
+.choice-desc {
+font-size: 12px;
+color: var(–muted);
+line-height: 1.5;
+}
+
+/* Tip box */
+.tip-box {
+background: #1a1c24;
+border: 1px dashed var(–border);
+border-radius: 10px;
+padding: 14px 18px;
+margin-top: 16px;
+display: flex;
+gap: 10px;
+align-items: flex-start;
+}
+.tip-icon { font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+.tip-text { font-size: 12px; color: var(–muted); line-height: 1.6; }
+.tip-text strong { color: var(–text); }
+
+/* End card */
+.end-card {
+text-align: center;
+padding: 40px 32px;
+}
+.end-icon { font-size: 40px; margin-bottom: 16px; }
+.end-title { font-family: ‘DM Serif Display’, serif; font-size: 24px; margin-bottom: 8px; }
+.end-desc { font-size: 14px; color: var(–muted); line-height: 1.6; max-width: 400px; margin: 0 auto 24px; }
+
+.next-step-list {
+text-align: left;
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 16px 20px;
+max-width: 400px;
+margin: 0 auto;
+}
+.next-step-list h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(–accent); margin-bottom: 10px; }
+.next-step-list li { font-size: 13px; color: var(–muted); line-height: 1.8; list-style: none; padding-left: 16px; position: relative; }
+.next-step-list li::before { content: ‘→’; position: absolute; left: 0; color: var(–accent); }
+
+@keyframes slideUp {
+from { opacity: 0; transform: translateY(16px); }
+to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+header { padding: 16px 20px; }
+.main { padding: 20px 16px 60px; }
+.node-card { padding: 20px; }
+.logo { font-size: 18px; }
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    Call Navigator
+    <span>Seller Lead · Life Insurance</span>
+  </div>
+  <div style="display:flex; align-items:center; gap:16px;">
+    <div class="phase-indicator" id="phaseIndicator">
+      <div class="phase-dot active" title="Opening"></div>
+      <div class="phase-dot" title="Bridge"></div>
+      <div class="phase-dot" title="Appointment Close"></div>
+      <div class="phase-dot" title="Objections"></div>
+      <div class="phase-dot" title="End"></div>
+    </div>
+    <button class="reset-btn" onclick="reset()">↺ Reset</button>
+  </div>
+</header>
+
+<div class="main">
+  <div class="breadcrumb" id="breadcrumb"></div>
+  <div id="nodeContainer"></div>
+</div>
+
+<script>
+const nodes = {
+
+  // ─── OPENING ───────────────────────────────────────────
+  start: {
+    phase: 'opening', phaseTag: 'Opening',
+    title: 'Did you catch them at a good time?',
+    subtitle: 'Start every call warm. Ask permission before diving in.',
+    script: `"Hi, is this <em>[First Name]</em>? Great! This is <em>[Your Name]</em> with <em>[Brokerage]</em>. I'm reaching out because you had expressed some interest in finding out what your home might be worth. Did I catch you at an okay time?"`,
+    question: 'How did they respond?',
+    choices: [
+      { label: 'Yes — good time', desc: 'They said yes or seem open', type: 'yes', next: 'bridge' },
+      { label: 'No — bad time', desc: 'They said they\'re busy right now', type: 'no', next: 'bad_time' },
+      { label: 'Not interested', desc: 'They said they\'re not interested', type: 'no', next: 'not_interested_open' },
+      { label: 'Take me off your list', desc: 'They want to be removed', type: 'no', next: 'remove_list' }
+    ],
+    phase_index: 0
+  },
+
+  bad_time: {
+    phase: 'opening', phaseTag: 'Opening',
+    title: 'Bad time — reschedule',
+    subtitle: 'Be respectful and lock in a callback time.',
+    script: `"No problem at all! When would be a better time to reach you — would later today work or is tomorrow better?"`,
+    question: 'Did they give you a callback time?',
+    choices: [
+      { label: 'Yes — gave a time', desc: 'They said call back at a specific time', type: 'yes', next: 'callback_booked' },
+      { label: 'No — still not interested', desc: 'They\'re brushing you off', type: 'no', next: 'not_interested_open' }
+    ],
+    phase_index: 0
+  },
+
+  callback_booked: {
+    phase: 'end', phaseTag: 'Wrap Up',
+    title: '📅 Callback Booked',
+    isEnd: true,
+    endIcon: '📅',
+    endTitle: 'Callback Scheduled',
+    endDesc: 'Perfect — they gave you a time. Confirm it warmly and log it immediately.',
+    script: `"Perfect, I'll call you back at <em>[Time]</em>. Have a great day!"`,
+    nextSteps: [
+      'Log callback time in Lofty CRM immediately',
+      'Set a reminder/alarm for the exact time',
+      'Call back on time — first impressions matter'
+    ],
+    phase_index: 4
+  },
+
+  not_interested_open: {
+    phase: 'opening', phaseTag: 'Opening',
+    title: '"I\'m not interested"',
+    subtitle: 'Stay warm — offer a low-pressure alternative.',
+    script: `"I completely understand! Would it be okay if I just sent you a quick text with some info on your home's value? No obligation at all — just something to keep on file."`,
+    question: 'Did they agree to receive the text?',
+    choices: [
+      { label: 'Yes — send it over', desc: 'They\'re open to a text or email', type: 'yes', next: 'send_info' },
+      { label: 'No — still not interested', desc: 'They want nothing from you', type: 'no', next: 'remove_list' }
+    ],
+    phase_index: 0
+  },
+
+  send_info: {
+    phase: 'end', phaseTag: 'Wrap Up',
+    title: '📲 Send Info',
+    isEnd: true,
+    endIcon: '📲',
+    endTitle: 'Sending Info',
+    endDesc: 'Great — get their contact info and follow up quickly with a market snapshot.',
+    script: `"Great! What's the best number/email to send that to?"`,
+    nextSteps: [
+      'Log contact info in Lofty CRM',
+      'Send a brief market value text/email within 1 hour',
+      'Follow up in 3–5 days to see if they have questions',
+      'Add to long-term nurture campaign in Lofty'
+    ],
+    phase_index: 4
+  },
+
+  remove_list: {
+    phase: 'end', phaseTag: 'Wrap Up',
+    title: '🚫 Remove from List',
+    isEnd: true,
+    endIcon: '🚫',
+    endTitle: 'Respect Their Wish',
+    endDesc: 'Never push someone who wants to be removed. Remove immediately and note it.',
+    script: `"Absolutely, I'll take care of that right away. Sorry to bother you and have a wonderful day!"`,
+    nextSteps: [
+      'Remove from calling list immediately',
+      'Mark as DNC (Do Not Call) in Lofty CRM',
+      'Move on — the right leads are out there'
+    ],
+    phase_index: 4
+  },
+
+  // ─── BRIDGE ────────────────────────────────────────────
+  bridge: {
+    phase: 'bridge', phaseTag: 'Bridge',
+    title: 'Introduce the value + insurance',
+    subtitle: 'Plant the insurance seed here — don\'t pitch, just mention it naturally.',
+    script: `"Wonderful. I work with homeowners in <em>[Area]</em> and I've been seeing a lot of activity in your market lately. I'd love to put together a free, no-obligation market analysis for your home. I'm also a bit unique — I'm both a real estate agent <em>and</em> a licensed life insurance agent, so I work with families not just on selling their home, but on protecting the wealth they build from it. It only takes about 30 minutes — would <em>[Day]</em> or <em>[Day]</em> work better for you?"`,
+    question: 'How did they respond to the appointment ask?',
+    choices: [
+      { label: 'Yes — wants to meet', desc: 'They agreed to an appointment', type: 'yes', next: 'appt_close' },
+      { label: 'Hesitant / maybe', desc: 'Not a hard no, but not a yes either', type: 'neutral', next: 'hesitant' },
+      { label: 'No — not interested in meeting', desc: 'They declined the appointment', type: 'no', next: 'no_meeting' }
+    ],
+    tip: 'Don\'t pitch insurance here — just mention it exists. Save details for the appointment.',
+    phase_index: 1
+  },
+
+  hesitant: {
+    phase: 'bridge', phaseTag: 'Bridge',
+    title: 'Hesitant — shorten the ask',
+    subtitle: 'Reduce commitment. Make it feel smaller and easier to say yes.',
+    script: `"I totally understand — life gets busy! What if we kept it to just 20 minutes? I'll bring the numbers on your home and if the insurance piece isn't interesting to you, we don't have to go there at all."`,
+    question: 'Did that help?',
+    choices: [
+      { label: 'Yes — now open to meeting', desc: 'They agreed after the softer ask', type: 'yes', next: 'appt_close' },
+      { label: 'Still no — offer email instead', desc: 'Still reluctant to meet', type: 'no', next: 'offer_email' }
+    ],
+    phase_index: 1
+  },
+
+  no_meeting: {
+    phase: 'bridge', phaseTag: 'Bridge',
+    title: 'No meeting — pivot to email',
+    subtitle: 'Don\'t lose them. Offer a no-friction alternative.',
+    script: `"No worries at all. Would it be okay if I sent you the market analysis by email so you at least have it for reference?"`,
+    question: 'Did they agree to the email?',
+    choices: [
+      { label: 'Yes — happy to get the email', desc: 'They gave their email', type: 'yes', next: 'send_info' },
+      { label: 'No — not interested at all', desc: 'Complete decline', type: 'no', next: 'remove_list' }
+    ],
+    phase_index: 1
+  },
+
+  offer_email: {
+    phase: 'bridge', phaseTag: 'Bridge',
+    title: 'Offer the email analysis',
+    subtitle: 'Last resort before letting them go — keep it zero pressure.',
+    script: `"No problem at all! Would it be okay if I sent you the market analysis by email? It's free, no strings attached — just good info to have."`,
+    question: 'Did they take the email offer?',
+    choices: [
+      { label: 'Yes — gave their email', desc: 'They\'ll accept the info', type: 'yes', next: 'send_info' },
+      { label: 'No — complete decline', desc: 'They want nothing', type: 'no', next: 'remove_list' }
+    ],
+    phase_index: 1
+  },
+
+  // ─── APPOINTMENT CLOSE ─────────────────────────────────
+  appt_close: {
+    phase: 'close', phaseTag: 'Appointment Close',
+    title: 'Lock in the appointment',
+    subtitle: 'Confirm day, time, and address. Assume the meeting is happening.',
+    script: `"Perfect. I'll plan to stop by <em>[Day]</em> at <em>[Time]</em>. I'll bring comps showing what homes like yours are selling for, and if you're open to it, we can spend just a few minutes talking about how families in your situation are protecting their equity and their family's future. Does <em>[address]</em> still work for you?"`,
+    question: 'How did the address/time confirmation go?',
+    choices: [
+      { label: 'Yes — confirmed everything', desc: 'Day, time, and address confirmed', type: 'yes', next: 'appt_confirmed' },
+      { label: 'Different address / location', desc: 'They want to meet elsewhere', type: 'neutral', next: 'diff_location' },
+      { label: 'Wants to reschedule', desc: 'The time doesn\'t work', type: 'no', next: 'reschedule' }
+    ],
+    phase_index: 2
+  },
+
+  appt_confirmed: {
+    phase: 'end', phaseTag: 'Wrap Up',
+    title: '🎉 Appointment Confirmed!',
+    isEnd: true,
+    endIcon: '🎉',
+    endTitle: 'Appointment Booked!',
+    endDesc: 'Great work! Wrap up warmly, send a confirmation text, and prepare your CMA.',
+    script: `"Wonderful! I'll see you <em>[Day]</em> at <em>[Time]</em>. I'll send you a quick confirmation text so you have my info. Looking forward to meeting you!"`,
+    nextSteps: [
+      'Log appointment in Lofty CRM immediately',
+      'Send confirmation text within 5 minutes',
+      'Prepare CMA (Comparative Market Analysis)',
+      'Bring life insurance info as optional conversation',
+      'Send reminder text morning of the appointment'
+    ],
+    phase_index: 4
+  },
+
+  diff_location: {
+    phase: 'close', phaseTag: 'Appointment Close',
+    title: 'Different location',
+    subtitle: 'Be flexible — the meeting is more important than the location.',
+    script: `"No problem — where would you feel comfortable meeting? I'm happy to come to you wherever works best."`,
+    question: 'Did they give you a location?',
+    choices: [
+      { label: 'Yes — gave a location', desc: 'They suggested somewhere to meet', type: 'yes', next: 'appt_confirmed' },
+      { label: 'No — changed mind about meeting', desc: 'They\'re backing out', type: 'no', next: 'offer_email' }
+    ],
+    phase_index: 2
+  },
+
+  reschedule: {
+    phase: 'close', phaseTag: 'Appointment Close',
+    title: 'Reschedule the appointment',
+    subtitle: 'Offer two new options — keep it easy for them.',
+    script: `"Absolutely, no problem! Would <em>[Day]</em> or <em>[Day]</em> work better for you?"`,
+    question: 'Did they pick a new time?',
+    choices: [
+      { label: 'Yes — new time confirmed', desc: 'They gave you a new day/time', type: 'yes', next: 'appt_confirmed' },
+      { label: 'No — too vague / not committing', desc: 'They\'re not locking anything in', type: 'no', next: 'offer_email' }
+    ],
+    phase_index: 2
+  },
+
+  // ─── OBJECTIONS ────────────────────────────────────────
+  commission_question: {
+    phase: 'objection', phaseTag: 'Objection',
+    title: '"What\'s your commission?"',
+    subtitle: 'Deflect to the appointment — don\'t negotiate on the phone.',
+    script: `"Great question — I'm happy to walk you through everything at our meeting so there are zero surprises. I want to make sure it makes complete sense for you."`,
+    question: 'Did they accept that answer?',
+    choices: [
+      { label: 'Yes — moving forward', desc: 'They\'re okay waiting for the meeting', type: 'yes', next: 'appt_close' },
+      { label: 'No — pushing for a number now', desc: 'They want a figure on the call', type: 'no', next: 'commission_push' }
+    ],
+    phase_index: 3
+  },
+
+  commission_push: {
+    phase: 'objection', phaseTag: 'Objection',
+    title: 'Pushing for a commission number',
+    subtitle: 'Give a range but anchor the meeting.',
+    script: `"Typically it ranges between <em>[X–X%]</em> depending on the situation, but I'd rather sit down and show you the full picture so you understand exactly what you're getting for that investment."`,
+    question: 'Are they satisfied?',
+    choices: [
+      { label: 'Yes — happy with that', desc: 'They\'ll move to the appointment', type: 'yes', next: 'appt_close' },
+      { label: 'No — too expensive / pushing back', desc: 'They\'re resistant to the commission', type: 'no', next: 'commission_objection' }
+    ],
+    phase_index: 3
+  },
+
+  commission_objection: {
+    phase: 'objection', phaseTag: 'Objection',
+    title: 'Commission too high objection',
+    subtitle: 'Reframe value — never just drop your rate.',
+    script: `"I completely understand — it's a significant investment. What I can tell you is that the agents who try to save on commission often leave more money on the table in the final sale price. I'd love to show you the numbers at our meeting so you can decide for yourself."`,
+    question: 'Are they still willing to meet?',
+    choices: [
+      { label: 'Yes — will hear you out', desc: 'They\'ll still come to the appointment', type: 'yes', next: 'appt_close' },
+      { label: 'No — want to think about it', desc: 'Not ready to commit', type: 'no', next: 'follow_up_later' }
+    ],
+    phase_index: 3
+  },
+
+  not_ready: {
+    phase: 'objection', phaseTag: 'Objection',
+    title: '"We\'re not ready to sell yet"',
+    subtitle: 'Reframe — knowing your value now is smart planning.',
+    script: `"That's totally fine — most people I talk to aren't ready right away. Knowing your home's value now just helps you plan. There's zero pressure and it's completely free."`,
+    question: 'Are they open to a future conversation?',
+    choices: [
+      { label: 'Yes — open to staying in touch', desc: 'They\'ll consider meeting later', type: 'yes', next: 'follow_up_later' },
+      { label: 'No — firmly not interested', desc: 'They don\'t want any contact', type: 'no', next: 'remove_list' }
+    ],
+    phase_index: 3
+  },
+
+  have_agent: {
+    phase: 'objection', phaseTag: 'Objection',
+    title: '"We already have an agent"',
+    subtitle: 'Respect it — position yourself as a backup.',
+    script: `"I completely respect that loyalty — it says a lot about you. If that ever changes, I'd love the opportunity to show you what I can do. Mind if I stay in touch?"`,
+    question: 'Are they under contract with that agent?',
+    choices: [
+      { label: 'Yes — under contract', desc: 'Legally tied to another agent', type: 'no', next: 'agent_contracted' },
+      { label: 'No — just a relationship', desc: 'No formal agreement in place', type: 'yes', next: 'appt_close' }
+    ],
+    phase_index: 3
+  },
+
+  agent_contracted: {
+    phase: 'end', phaseTag: 'Wrap Up',
+    title: '🤝 Under Contract with Another Agent',
+    isEnd: true,
+    endIcon: '🤝',
+    endTitle: 'Graceful Exit',
+    endDesc: 'Don\'t push. Be gracious and position yourself for the future.',
+    script: `"That's great — I hope it goes smoothly for you! If anything ever changes or you need a second opinion, please don\'t hesitate to reach out."`,
+    nextSteps: [
+      'Note in Lofty CRM: has agent, under contract',
+      'Set a follow-up reminder for 6 months out',
+      'Send a friendly check-in when their listing expires'
+    ],
+    phase_index: 4
+  },
+
+  insurance_pushback: {
+    phase: 'insurance', phaseTag: 'Insurance',
+    title: '"Aren\'t you just trying to sell me insurance?"',
+    subtitle: 'Acknowledge it with humor — then reassure.',
+    script: `"I get that a lot! I promise the home valuation is the main event. The insurance piece is just a bonus I offer — completely your call. Most people actually appreciate having both in one place."`,
+    question: 'Did that ease their concern?',
+    choices: [
+      { label: 'Yes — they\'re good now', desc: 'Objection resolved, continuing', type: 'yes', next: 'appt_close' },
+      { label: 'No — still defensive', desc: 'They\'re still skeptical', type: 'no', next: 'insurance_firm_no' }
+    ],
+    phase_index: 3
+  },
+
+  insurance_firm_no: {
+    phase: 'insurance', phaseTag: 'Insurance',
+    title: 'Firm "no" on insurance topic',
+    subtitle: 'Drop it completely — real estate is enough to get the appointment.',
+    script: `"Totally understood — we'll keep it 100% focused on the real estate side. No insurance talk at all, I promise. I just want to help you understand what your home is worth."`,
+    question: 'Are they willing to meet now?',
+    choices: [
+      { label: 'Yes — real estate only, let\'s meet', desc: 'They\'ll do the appointment without insurance', type: 'yes', next: 'appt_close' },
+      { label: 'No — still not interested', desc: 'Complete decline', type: 'no', next: 'offer_email' }
+    ],
+    phase_index: 3
+  },
+
+  have_insurance: {
+    phase: 'insurance', phaseTag: 'Insurance',
+    title: '"We already have life insurance"',
+    subtitle: 'Don\'t argue — offer a free second look.',
+    script: `"That's great to hear! A lot of people just want a second set of eyes to make sure their coverage still makes sense after a big move like this. Happy to take a quick look at no cost."`,
+    question: 'Are they open to a review?',
+    choices: [
+      { label: 'Yes — open to a review', desc: 'They\'ll let you look at their coverage', type: 'yes', next: 'appt_close' },
+      { label: 'No — coverage is fine', desc: 'They\'re not interested in a review', type: 'no', next: 'appt_close' }
+    ],
+    tip: 'Either way — you still have the real estate appointment. Don\'t lose it over insurance.',
+    phase_index: 3
+  },
+
+  follow_up_later: {
+    phase: 'end', phaseTag: 'Wrap Up',
+    title: '📆 Follow Up Later',
+    isEnd: true,
+    endIcon: '📆',
+    endTitle: 'Long-Term Nurture',
+    endDesc: 'They\'re not ready now — but they could be later. Stay in their world.',
+    script: `"I completely respect that! Would it be okay if I checked back in with you in a few months? Markets change and I'd love to be your go-to when the time is right."`,
+    nextSteps: [
+      'Log as "future seller" in Lofty CRM',
+      'Add to long-term email drip campaign',
+      'Set a follow-up task for 60–90 days',
+      'Send a market update once a month — no pressure'
+    ],
+    phase_index: 4
+  }
+};
+
+// ─── Objection quick-access menu ───────────────────────────────────────────
+const objections = [
+  { label: 'What\'s your commission?', next: 'commission_question' },
+  { label: 'Not ready to sell yet', next: 'not_ready' },
+  { label: 'Already have an agent', next: 'have_agent' },
+  { label: 'Just trying to sell insurance?', next: 'insurance_pushback' },
+  { label: 'Already have life insurance', next: 'have_insurance' },
+];
+
+let history = [];
+let currentNode = 'start';
+
+function getPhaseClass(phase) {
+  const map = { opening: 'phase-opening', bridge: 'phase-bridge', close: 'phase-close', objection: 'phase-objection', insurance: 'phase-insurance', end: 'phase-end' };
+  return map[phase] || '';
+}
+function getTagClass(phase) {
+  const map = { opening: 'tag-opening', bridge: 'tag-bridge', close: 'tag-close', objection: 'tag-objection', insurance: 'tag-insurance', end: 'tag-end' };
+  return map[phase] || '';
+}
+
+function updatePhaseIndicator(index) {
+  const dots = document.querySelectorAll('.phase-dot');
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i < index) d.classList.add('done');
+    else if (i === index) d.classList.add('active');
+  });
+}
+
+function renderBreadcrumb() {
+  const bc = document.getElementById('breadcrumb');
+  bc.innerHTML = history.map((h, i) => {
+    const cls = h.type === 'yes' ? 'yes-crumb' : h.type === 'no' ? 'no-crumb' : '';
+    return `<div class="crumb ${cls}">${h.label}</div>`;
+  }).join('');
+}
+
+function navigate(nodeId, choiceLabel, choiceType) {
+  if (choiceLabel) {
+    history.push({ label: choiceLabel, type: choiceType });
+  }
+  currentNode = nodeId;
+  renderNode(nodeId);
+  renderBreadcrumb();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function reset() {
+  history = [];
+  currentNode = 'start';
+  renderNode('start');
+  renderBreadcrumb();
+  updatePhaseIndicator(0);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderNode(nodeId) {
+  const node = nodes[nodeId];
+  if (!node) return;
+  updatePhaseIndicator(node.phase_index || 0);
+
+  const container = document.getElementById('nodeContainer');
+
+  if (node.isEnd) {
+    container.innerHTML = `
+      <div class="node-card ${getPhaseClass(node.phase)} end-card">
+        <div class="end-icon">${node.endIcon}</div>
+        <div class="end-title">${node.endTitle}</div>
+        <div class="end-desc">${node.endDesc}</div>
+        ${node.script ? `
+        <div class="script-box" style="max-width:480px;margin:0 auto 24px;">
+          <div class="script-label">Say This</div>
+          <div class="script-text">${node.script}</div>
+        </div>` : ''}
+        <div class="next-step-list">
+          <h4>Next Steps</h4>
+          ${node.nextSteps.map(s => `<li>${s}</li>`).join('')}
+        </div>
+      </div>
+      ${renderObjectionMenu()}
+    `;
+    return;
+  }
+
+  const choicesHtml = (node.choices || []).map(c => {
+    const btnClass = c.type === 'yes' ? 'yes-btn' : c.type === 'no' ? 'no-btn' : 'neutral-btn';
+    const iconClass = c.type === 'yes' ? 'yes-icon' : c.type === 'no' ? 'no-icon' : 'neutral-icon';
+    const iconText = c.type === 'yes' ? '✓' : c.type === 'no' ? '✕' : '→';
+    return `
+      <button class="choice-btn ${btnClass}" onclick="navigate('${c.next}', '${c.label.replace(/'/g,"\\'")}', '${c.type}')">
+        <div class="choice-icon ${iconClass}">${iconText}</div>
+        <div class="choice-content">
+          <div class="choice-label">${c.label}</div>
+          <div class="choice-desc">${c.desc}</div>
+        </div>
+      </button>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="node-card ${getPhaseClass(node.phase)}">
+      <div class="phase-tag ${getTagClass(node.phase)}">${node.phaseTag}</div>
+      <div class="node-title">${node.title}</div>
+      <div class="node-subtitle">${node.subtitle}</div>
+      <div class="script-box">
+        <div class="script-label">Say This</div>
+        <div class="script-text">${node.script}</div>
+      </div>
+      <div class="question-label">${node.question}</div>
+      <div class="choices">${choicesHtml}</div>
+      ${node.tip ? `<div class="tip-box"><div class="tip-icon">💡</div><div class="tip-text"><strong>Pro tip:</strong> ${node.tip}</div></div>` : ''}
+    </div>
+    ${renderObjectionMenu()}
+  `;
+}
+
+function renderObjectionMenu() {
+  const items = objections.map(o => `
+    <button class="choice-btn neutral-btn" style="padding:11px 16px;" onclick="navigate('${o.next}', 'Objection: ${o.label.replace(/'/g,"\\'")}', 'neutral')">
+      <div class="choice-icon neutral-icon" style="width:22px;height:22px;font-size:11px;">!</div>
+      <div class="choice-content">
+        <div class="choice-label" style="font-size:12px;">${o.label}</div>
+      </div>
+    </button>
+  `).join('');
+
+  return `
+    <div class="node-card" style="border-color:#2a2d3a44;">
+      <div class="phase-tag tag-objection">⚡ Quick Objections</div>
+      <div class="node-subtitle" style="margin-bottom:14px;">If they raise an objection at any point, tap it here</div>
+      <div class="choices" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">${items}</div>
+    </div>
+  `;
+}
+
+// Init
+renderNode('start');
+</script>
+
+</body>
+</html>
+
+
+
+Reply
+
+Forward
